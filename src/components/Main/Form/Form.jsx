@@ -12,12 +12,17 @@ import {
 import useStyles from "./styles";
 import { ExpenseTracketContext } from "../../../context/context";
 import { v4 as uuidv4 } from "uuid";
+import {
+  expenseCategories,
+  incomeCategories,
+} from "../../../constants/categories";
+import formatDate from "../../../utils/formatDate";
 
 const initialState = {
   amount: "",
   category: "",
   type: "Income",
-  date: new Date(),
+  date: formatDate(new Date()),
 };
 
 const Form = () => {
@@ -35,6 +40,9 @@ const Form = () => {
     addTransaction(transaction);
     setFormData(initialState);
   };
+
+  const selectedCategories =
+    formData.type === "Income" ? incomeCategories : expenseCategories;
 
   return (
     <Grid container spacing={2}>
@@ -66,8 +74,11 @@ const Form = () => {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <MenuItem value="Business">Business</MenuItem>
-            <MenuItem value="Salary">Salary</MenuItem>
+            {selectedCategories.map((category) => (
+              <MenuItem key={category.type} value={category.type}>
+                {category.type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -86,7 +97,9 @@ const Form = () => {
           label="Date"
           fullWidth
           value={formData.date}
-          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, date: formatDate(e.target.value) })
+          }
         />
       </Grid>
       <Button
