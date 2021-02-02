@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -17,6 +17,7 @@ import {
   incomeCategories,
 } from "../../../constants/categories";
 import formatDate from "../../../utils/formatDate";
+import { useSpeechContext } from "@speechly/react-client";
 
 const initialState = {
   amount: "",
@@ -29,6 +30,7 @@ const Form = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
   const { addTransaction } = useContext(ExpenseTracketContext);
+  const { segment } = useSpeechContext();
 
   const createTransaction = () => {
     const transaction = {
@@ -41,17 +43,35 @@ const Form = () => {
     setFormData(initialState);
   };
 
+  useEffect(() => {
+    if (segment) {
+      if (segment.intent.intent === "add_expense") {
+        setFormData({ ...formData, type: "Expense" });
+      } else if (segment.intent.intent === "add_income") {
+        setFormData({ ...formData, type: "Income" });
+      } else if (
+        segment.isFinal &&
+        segment.intent.intent === "create_transaction"
+      ) {
+        return createTransaction();
+      } else if (
+        segment.isFinal &&
+        segment.intent.intent === "cancel_transaction"
+      ) {
+        return setFormData(initialState);
+      }
+    }
+  }, [segment]);
+
   const selectedCategories =
     formData.type === "Income" ? incomeCategories : expenseCategories;
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          gutterBottom
-        ></Typography>
+        <Typography align="center" variant="subtitle2" gutterBottom>
+          {segment && <> {segment.words.map((s) => s.value).join(" ")} </>}
+        </Typography>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
