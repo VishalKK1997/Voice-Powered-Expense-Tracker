@@ -8,7 +8,10 @@ const Details = ({ title }) => {
   const classes = useStyles();
   const { chartData, total } = useTransactions(title);
   return (
-    <Card className={title === "Income" ? classes.income : classes.expense}>
+    <Card
+      style={{ height: "50vh" }}
+      className={title === "Income" ? classes.income : classes.expense}
+    >
       <CardHeader title={title} />
       <CardContent>
         <Typography variant="h5">{`$${total}`}</Typography>
