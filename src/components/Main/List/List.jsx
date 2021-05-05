@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import useStyles from "./styles";
 import {
   Avatar,
@@ -12,14 +12,22 @@ import {
 } from "@material-ui/core";
 import { Delete, MoneyOff } from "@material-ui/icons";
 import { ExpenseTracketContext } from "../../../context/context";
+import CustomizedSnackbar from "../../Snackbar/Snackbar";
 //hello
 
 const List = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const { deleteTransaction, transactions } = useContext(ExpenseTracketContext);
+
+  const handleDeleteTransaction = (transactionId) => {
+    setOpen(true);
+    deleteTransaction(transactionId);
+  };
 
   return (
     <MUIList dense={false} className={classes.list}>
+      <CustomizedSnackbar open={open} setOpen={setOpen} action="delete" />
       {transactions.map((transaction) => (
         <Slide
           direction="down"
@@ -48,7 +56,7 @@ const List = () => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => deleteTransaction(transaction.id)}
+                onClick={() => handleDeleteTransaction(transaction.id)}
               >
                 <Delete />
               </IconButton>

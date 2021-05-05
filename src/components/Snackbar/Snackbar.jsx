@@ -4,7 +4,7 @@ import { Alert } from "@material-ui/lab";
 
 import useStyles from "./styles";
 
-const CustomizedSnackbar = ({ open, setOpen }) => {
+const CustomizedSnackbar = ({ open, setOpen, action }) => {
   const classes = useStyles();
 
   const handleClose = (event, reason) => {
@@ -24,11 +24,12 @@ const CustomizedSnackbar = ({ open, setOpen }) => {
       >
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity={action === "create" ? "success" : "error"}
           elevation={6}
           variant="filled"
         >
-          Transaction successfully created
+          Transaction successfully
+          {action === "create" ? " created" : " deleted"}
         </Alert>
       </Snackbar>
     </div>
