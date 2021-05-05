@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   root: {
-    marginTop: "-70px",
+    // marginTop: "-15px",
   },
   media: {
     height: 0,
@@ -22,6 +22,6 @@ export default makeStyles((theme) => ({
     paddingTop: 0,
   },
   divider: {
-    margin: "20px 0",
+    margin: "5px 0",
   },
 }));

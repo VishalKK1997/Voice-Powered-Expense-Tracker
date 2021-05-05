@@ -18,6 +18,7 @@ import {
 } from "../../../constants/categories";
 import formatDate from "../../../utils/formatDate";
 import { useSpeechContext } from "@speechly/react-client";
+import CustomizedSnackbar from "../../Snackbar/Snackbar";
 
 const initialState = {
   amount: "",
@@ -29,6 +30,7 @@ const initialState = {
 const Form = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
+  const [open, setOpen] = useState(false);
   const { addTransaction } = useContext(ExpenseTracketContext);
   const { segment } = useSpeechContext();
 
@@ -41,6 +43,7 @@ const Form = () => {
       id: uuidv4(),
     };
 
+    setOpen(true);
     addTransaction(transaction);
     setFormData(initialState);
   };
@@ -105,6 +108,7 @@ const Form = () => {
 
   return (
     <Grid container spacing={2}>
+      <CustomizedSnackbar open={open} setOpen={setOpen} />
       <Grid item xs={12}>
         <Typography align="center" variant="subtitle2" gutterBottom>
           {segment && segment.words.map((s) => s.value).join(" ")}

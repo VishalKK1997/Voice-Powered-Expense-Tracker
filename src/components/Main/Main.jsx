@@ -7,10 +7,12 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import useStyles from "./styles";
 import Form from "./Form/Form";
 import List from "./List/List";
 import { ExpenseTracketContext } from "../../context/context";
+import InfoCard from "../InfoCard";
+
+import useStyles from "./styles";
 
 const Main = () => {
   const classes = useStyles();
@@ -28,10 +30,9 @@ const Main = () => {
             variant="subtitle1"
             style={{ lineHeight: "1.5em", marginTop: "20px" }}
           >
-            Try saying : Add income for 100$ in the category Salary for next
-            monday...
+            <InfoCard />
           </Typography>
-          <Divider />
+          <Divider className={classes.divider} />
           <Form />
         </CardContent>
         <CardContent className={classes.cardContent}>
