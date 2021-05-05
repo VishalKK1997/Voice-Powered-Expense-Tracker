@@ -7,7 +7,8 @@ export default makeStyles((theme) => ({
     backgroundColor: green[500],
   },
   avatarExpense: {
-    color: theme.palette.getContrastText(red[500]),
+    // color: theme.palette.getContrastText(red[500]),
+    color: "#fff",
     backgroundColor: red[500],
   },
   list: {

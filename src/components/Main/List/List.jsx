@@ -13,6 +13,7 @@ import {
 import { Delete, MoneyOff } from "@material-ui/icons";
 import { ExpenseTracketContext } from "../../../context/context";
 import CustomizedSnackbar from "../../Snackbar/Snackbar";
+import { green, red } from "@material-ui/core/colors";
 //hello
 
 const List = () => {
@@ -39,11 +40,16 @@ const List = () => {
           <ListItem>
             <ListItemAvatar>
               <Avatar
-                className={
+                style={
                   transaction.type === "Income"
-                    ? classes.avatarIncome
-                    : classes.avatarExpense
+                    ? { color: "#fff", backgroundColor: green[500] }
+                    : { color: "#fff", backgroundColor: red[500] }
                 }
+                // className={
+                //   transaction.type === "Income"
+                //     ? classes.avatarIncome
+                //     : classes.avatarExpense
+                // }
               >
                 <MoneyOff />
               </Avatar>
